@@ -1,0 +1,20 @@
+[package]
+name = "to-streamshare"
+version = "0.1.0"
+edition = "2021"
+description = "Upload to streamshare (to-ss > toss) from the terminal"
+license = "MIT"
+homepage = "https://waradu.dev"
+repository = "https://github.com/Waradu/to-streamshare"
+readme = "README.md"
+authors = ["Waradu"]
+keywords = ["streamshare","file-sharing","upload"]
+
+[dependencies]
+clap = { version = "4.5.20", features = ["derive"] }
+streamshare = "1.0.0"
+tokio = { version = "1.40.0", features = ["full"] }
+
+[[bin]]
+name = "toss"
+path = "src/main.rs"
