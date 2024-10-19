@@ -1,6 +1,6 @@
 [package]
 name = "to-streamshare"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 description = "Upload to streamshare (to-ss > toss) from the terminal"
 license = "MIT"
@@ -12,7 +12,7 @@ keywords = ["streamshare","file-sharing","upload"]
 
 [dependencies]
 clap = { version = "4.5.20", features = ["derive"] }
-streamshare = "1.0.0"
+streamshare = "1.1.0"
 tokio = { version = "1.40.0", features = ["full"] }
 
 [[bin]]
