@@ -1,6 +1,6 @@
 [package]
 name = "to-streamshare"
-version = "0.2.1"
+version = "0.2.2"
 edition = "2021"
 description = "Upload to streamshare (to-ss > toss) from the terminal"
 license = "MIT"

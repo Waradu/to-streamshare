@@ -1,4 +1,4 @@
-use clap::Parser;
+use clap::{CommandFactory, Parser};
 use streamshare::upload;
 
 #[derive(Parser, Debug)]
@@ -44,7 +44,7 @@ async fn main() {
             Err(e) => eprintln!("Error: {}", e),
         }
     } else {
-        eprintln!("Please provide a file path or use --delete");
+        Args::command().print_help().unwrap();
     }
 }
 
