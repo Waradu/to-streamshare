@@ -124,6 +124,7 @@ async fn main() -> std::io::Result<()> {
             Ok((file_identifier, deletion_token)) => {
                 let mut pb = pb_arc.lock().unwrap();
                 pb.update_to(file_size as usize).unwrap();
+                pb.clear().unwrap();
 
                 println!("\n{}", "┌".to_owned() + &"─".repeat(79) + "┐");
                 println!("│{:^90}│", "Upload Complete!".colorize("bold green"));
@@ -150,6 +151,7 @@ async fn main() -> std::io::Result<()> {
                 );
 
                 println!("{}", "└".to_owned() + &"─".repeat(79) + "┘");
+                println!()
             }
             Err(e) => eprintln!("{}", format!("Error: {}", e).colorize("bold red")),
         }
