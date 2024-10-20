@@ -1,4 +1,5 @@
 use clap::{CommandFactory, Parser};
+use console::{measure_text_width, pad_str, Alignment};
 use kdam::{term::Colorizer, tqdm, BarExt, Column, RichProgress, Spinner};
 use std::fs;
 use std::io::{stderr, IsTerminal};
@@ -126,33 +127,48 @@ async fn main() -> std::io::Result<()> {
                 pb.update_to(file_size as usize).unwrap();
                 pb.clear().unwrap();
 
-                println!("\n{}", "┌".to_owned() + &"─".repeat(79) + "┐");
-                println!("│{:^90}│", "Upload Complete!".colorize("bold green"));
-                println!("├{}┤", "─".repeat(79));
-
-                let download_url = format!(
+                let url = format!(
                     "https://streamshare.wireway.ch/download/{}",
                     file_identifier
                 );
-                println!(
-                    "│ {:<15} {:<31} │",
-                    "URL:".colorize("bold yellow"),
-                    download_url
-                );
-                println!(
-                    "│ {:<15} {:<68} │",
-                    "File ID:".colorize("bold yellow"),
-                    file_identifier
-                );
-                println!(
-                    "│ {:<15} {:<61} │",
-                    "Deletion Token:".colorize("bold yellow"),
-                    deletion_token
-                );
 
-                println!("{}", "└".to_owned() + &"─".repeat(79) + "┘");
-                println!()
+                let title = "Upload Complete!".colorize("bold green");
+                let label_url = "URL:".colorize("bold yellow");
+                let label_file_id = "File ID:".colorize("bold yellow");
+                let label_deletion_token = "Deletion Token:".colorize("bold yellow");
+
+                let labels = vec![
+                    (label_url, url),
+                    (label_file_id, file_identifier),
+                    (label_deletion_token, deletion_token),
+                ];
+
+                let title_width = measure_text_width(&title);
+                let max_line_width = labels
+                    .iter()
+                    .map(|(label, content)| measure_text_width(&format!("{} {}", label, content)))
+                    .max()
+                    .unwrap_or(0);
+
+                let box_width = max_line_width.max(title_width) + 2;
+
+                println!("\n{}", format!("┌{}┐", "─".repeat(box_width)));
+
+                let padded_title = pad_str(&title, box_width, Alignment::Center, None);
+                println!("│{}│", padded_title);
+
+                println!("{}", format!("├{}┤", "─".repeat(box_width)));
+
+                for (label, content) in labels {
+                    let combined = format!("{} {}", label, content);
+                    let line_padded = pad_str(&combined, box_width - 2, Alignment::Left, None);
+                    println!("│ {} │", line_padded);
+                }
+
+                println!("{}", format!("└{}┘", "─".repeat(box_width)));
+                println!();
             }
+
             Err(e) => eprintln!("{}", format!("Error: {}", e).colorize("bold red")),
         }
 
