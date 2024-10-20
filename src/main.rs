@@ -20,8 +20,8 @@ async fn main() {
     let args = Args::parse();
 
     if let Some(delete_param) = args.delete {
-        if let Some((identifier, deltoken)) = parse_delete_param(&delete_param) {
-            match streamshare::delete(identifier, deltoken).await {
+        if let Some((file_identifier, deletion_token)) = parse_delete_param(&delete_param) {
+            match streamshare::delete(file_identifier, deletion_token).await {
                 Ok(_) => println!("File deleted successfully"),
                 Err(e) => eprintln!("Error deleting file: {}", e),
             }
@@ -29,7 +29,7 @@ async fn main() {
             eprintln!("Invalid format for --delete. Use 'file_identifier/deletion_token' (e.g., 'abc123/def456')");
         }
     } else if let Some(file_path) = args.file {
-        match upload(&file_path).await {
+        match upload(&file_path, true).await {
             Ok((file_identifier, deletion_token)) => {
                 let download_url = format!(
                     "https://streamshare.wireway.ch/download/{}",
