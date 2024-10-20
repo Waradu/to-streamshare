@@ -1,5 +1,5 @@
 use clap::{CommandFactory, Parser};
-use streamshare::upload;
+use streamshare::{delete, upload};
 
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
@@ -21,7 +21,7 @@ async fn main() {
 
     if let Some(delete_param) = args.delete {
         if let Some((file_identifier, deletion_token)) = parse_delete_param(&delete_param) {
-            match streamshare::delete(file_identifier, deletion_token).await {
+            match delete(file_identifier, deletion_token).await {
                 Ok(_) => println!("File deleted successfully"),
                 Err(e) => eprintln!("Error deleting file: {}", e),
             }
