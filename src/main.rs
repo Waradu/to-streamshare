@@ -46,12 +46,18 @@ struct Args {
     download: Option<String>,
 
     #[arg(
-        short,
         long,
         value_name = "PATH",
         help = "Set the path to download the file to."
     )]
     path: Option<String>,
+
+    #[arg(
+        long,
+        value_name = "REPLACE",
+        help = "Replace file when downloading if it already exists.",
+    )]
+    replace: bool,
 }
 
 #[tokio::main]
@@ -83,7 +89,7 @@ async fn main() -> std::io::Result<()> {
             None => "".to_string()
         };
 
-        match client.download(download.as_str(), path.as_str()).await {
+        match client.download(download.as_str(), path.as_str(), args.replace).await {
             Ok(_) => println!("File downloaded successfully"),
             Err(e) => eprintln!("Error downloaded file: {}", e),
         }

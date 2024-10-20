@@ -27,4 +27,5 @@ toss --delete "file_identifier/deletion_token"
 ```bash
 toss --download "file_identifier"
 toss --download "file_identifier" --path "" # uses current path as default
+toss --download "file_identifier" --replace # replace if file already exist
 ```
