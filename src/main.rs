@@ -1,5 +1,3 @@
-use std::{io::Write, time::Instant};
-
 use clap::{CommandFactory, Parser};
 use kdam::{tqdm, BarExt, Column, RichProgress, Spinner, term::Colorizer};
 use streamshare::{delete, upload};
@@ -56,9 +54,9 @@ async fn main() -> std::io::Result<()> {
                 Column::Spinner(Spinner::new(&["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"], 80.0, 1.0)),
                 Column::Percentage(1),
                 Column::Text("•".to_owned()),
-                Column::CountTotal,
-                Column::Text("•".to_owned()),
                 Column::Animation,
+                Column::Text("•".to_owned()),
+                Column::CountTotal,
                 Column::Text("•".to_owned()),
                 Column::Rate,
                 Column::Text("•".to_owned()),
@@ -122,21 +120,5 @@ fn parse_delete_param(param: &str) -> Option<(&str, &str)> {
         Some((parts[0], parts[1]))
     } else {
         None
-    }
-}
-
-fn readable(bytes: u64) -> String {
-    const KB: f64 = 1024.0;
-    const MB: f64 = KB * 1024.0;
-    const GB: f64 = MB * 1024.0;
-
-    if bytes as f64 >= GB {
-        format!("{:.2}gb", bytes as f64 / GB)
-    } else if bytes as f64 >= MB {
-        format!("{:.2}mb", bytes as f64 / MB)
-    } else if bytes as f64 >= KB {
-        format!("{:.2}kb", bytes as f64 / KB)
-    } else {
-        format!("{}b", bytes)
     }
 }
