@@ -1191,9 +1191,9 @@ checksum = "6980e8d7511241f8acf4aebddbb1ff938df5eebe98691418c4468d0b72a96a67"
 
 [[package]]
 name = "streamshare"
-version = "2.0.0"
+version = "3.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "723b8059b8580d19ea0bdd3202fc8ba38c01719ee5ad2d5b70e530e8f3c5e22e"
+checksum = "d8a66009b98588531c068a6b1fc2345a05292dd279c73554d514fd47f926b2e7"
 dependencies = [
  "futures",
  "reqwest",
@@ -1306,7 +1306,7 @@ checksum = "1f3ccbac311fea05f86f61904b462b55fb3df8837a366dfc601a0161d0532f20"
 
 [[package]]
 name = "to-streamshare"
-version = "0.3.1"
+version = "0.4.0"
 dependencies = [
  "clap",
  "streamshare",
