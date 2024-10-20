@@ -2,7 +2,7 @@ use clap::{CommandFactory, Parser};
 use streamshare::{delete, upload};
 
 #[derive(Parser, Debug)]
-#[command(version, about, long_about = None)]
+#[command(name = "toss", version, about, long_about = None)]
 struct Args {
     file: Option<String>,
 
