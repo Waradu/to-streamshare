@@ -1,4 +1,4 @@
-# To Streamshare
+# To Streamshare (to-ss > toss)
 
 Upload files to [streamshare](https://streamshare.wireway.ch) with the terminal.
 
