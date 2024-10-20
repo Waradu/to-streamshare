@@ -16,16 +16,8 @@ struct Args {
     #[arg(
         short,
         long,
-        value_name = "DELETE",
-        help = "Specify a file to delete in the format 'file_identifier/deletion_token' (e.g., 'abc123/def456')"
-    )]
-    delete: Option<String>,
-
-    #[arg(
-        short,
-        long,
         value_name = "SERVER",
-        help = "Specify a server",
+        help = "Specify a server.",
         default_value = "streamshare.wireway.ch"
     )]
     server: Option<String>,
@@ -33,11 +25,33 @@ struct Args {
     #[arg(
         short,
         long,
-        value_name = "CHUNK-SIZE",
+        value_name = "CHUNK_SIZE",
         help = "Specify a chunk size",
         default_value = "1048576"
     )]
     chunk_size: Option<String>,
+
+    #[arg(
+        long,
+        value_name = "DELETE",
+        help = "Delete a file. Format: 'file_identifier/deletion_token'"
+    )]
+    delete: Option<String>,
+
+    #[arg(
+        long,
+        value_name = "DOWNLOAD",
+        help = "Download a file. Format: 'file_identifier'"
+    )]
+    download: Option<String>,
+
+    #[arg(
+        short,
+        long,
+        value_name = "PATH",
+        help = "Set the path to download the file to."
+    )]
+    path: Option<String>,
 }
 
 #[tokio::main]
@@ -62,6 +76,16 @@ async fn main() -> std::io::Result<()> {
             }
         } else {
             eprintln!("Invalid format for --delete. Use 'file_identifier/deletion_token' (e.g., 'abc123/def456')");
+        }
+    } else if let Some(download) = args.download {
+        let path = match args.path {
+            Some(p) => p,
+            None => "".to_string()
+        };
+
+        match client.download(download.as_str(), path.as_str()).await {
+            Ok(_) => println!("File downloaded successfully"),
+            Err(e) => eprintln!("Error downloaded file: {}", e),
         }
     } else if let Some(file_path) = args.file {
         kdam::term::init(stderr().is_terminal());

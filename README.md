@@ -12,12 +12,19 @@ cargo install to-streamshare
 
 ```bash
 toss "filepath"
-toss "filepath" --chunk-size 100 # set chunk_size to 100
-toss "filepath" --server "streamshare.myserver.com" # set server to your server
+toss --chunk-size 100 "filepath" # set chunk_size to 100
+toss --server "streamshare.myserver.com" "filepath" # set server to your server
 ```
 
 ### Delete
 
 ```bash
-toss --delete file_identifier/deletion_token
+toss --delete "file_identifier/deletion_token"
+```
+
+### Download
+
+```bash
+toss --download "file_identifier"
+toss --download "file_identifier" --path "" # uses current path as default
 ```
